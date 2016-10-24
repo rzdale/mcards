@@ -1,0 +1,11 @@
+<% if @cards %>
+    <ul>
+        <% @cards.each do |card| %>
+            <li>
+                <%= link_to card.name, "/cards/#{card.id}" %>
+            </li>
+        <% end %>
+    </ul>
+<% else %>
+    <p>no cards!</p>
+<% end %>

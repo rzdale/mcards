@@ -1,0 +1,11 @@
+<% if @card %>
+    <ul>
+        <li><%= @card.name %></li>
+        <li><%= @card.artist %></li>
+        <li><%= @card.color%></li>
+        <li><%= @card.rarity %></li>
+        <li><%= @card.set %></li>
+    </ul>
+<% else %>
+    <p>card not found!</p>
+<% end %>
