@@ -2,13 +2,13 @@
 
 <%= image_tag @card.imgsrc %>
 
-    <ul>
-        <li><%= @card.name %></li>
-        <li><%= @card.artist %></li>
-        <li><%= @card.color%></li>
-        <li><%= @card.rarity %></li>
-        <li><%= @card.set %></li>
-    </ul>
+
+    <h3><%= @card.name %></h3>
+    <h4>Artist: <%= @card.artist %></h4>
+    <p><%= image_tag @mana_img %></p>
+    <p>$<%= number_with_precision(@price, :precision => 2) %></p>
+    
+
 <% else %>
     <p>card not found!</p>
 <% end %>
