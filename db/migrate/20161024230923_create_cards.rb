@@ -6,6 +6,7 @@ class CreateCards < ActiveRecord::Migration
       t.string :color
       t.integer :rarity
       t.string :set
+      t.string :imgsrc
     end
   end
 end

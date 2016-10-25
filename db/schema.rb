@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20161024230923) do
     t.string  "color"
     t.integer "rarity"
     t.string  "set"
+    t.string  "imgsrc"
   end
 
 end
