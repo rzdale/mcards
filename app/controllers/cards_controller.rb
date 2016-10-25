@@ -1,5 +1,13 @@
 class CardsController < ApplicationController
 
+    require "braintree"
+
+    Braintree::Configuration.environment = :sandbox
+    Braintree::Configuration.merchant_id = ENV['MERCHANT_ID']
+    Braintree::Configuration.public_key = ENV['PUBLIC_KEY']
+    Braintree::Configuration.private_key = ENV['PRIVATE_KEY']
+
+
     def index
         @cards = Card.all
     end
@@ -22,8 +30,16 @@ class CardsController < ApplicationController
             when 3 then 10.0
         end
         
+        @token = Braintree::ClientToken.generate
         
-        
+    end
+
+    def checkout
+        result = Braintree::Transaction.sale(
+                amount: params[:price],
+                payment_method_nonce: params[:payment_method_nonce],
+                options: {submit_for_settlement: true}
+            )
     end
 
 end
