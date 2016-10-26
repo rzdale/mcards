@@ -1,1 +1,29 @@
-checkout complete!
+<h1>Checkout</h1>
+
+<%= image_tag @card.imgsrc %>
+
+<h3><%= @card.name %></h3>
+<p>$<%= number_with_precision(@price, :precision => 2) %></p>
+
+
+<%= form_tag("/process_payment", method: "post", id: "process_payment") do %>
+  <div id="payment-form"></div>
+  <input type="hidden" name="price" value="<%= @price %>">
+  <input type="hidden" name="card_id" value="<%= @card.id %>">
+  Address Line 1: <input type="text" name="address_line_1"><br>
+  Address Line 2: <input type="text" name="address_line_2"><br>
+  City: <input type="text" name="city"><br>
+  State abbreviation: <input type="text" name="state_abbr"><br>
+  Zip code: <input type="text" name="zip_code"><br>
+  <input type="submit" value="Complete order">
+<% end %>
+
+<script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
+<script>
+
+var clientToken = "<%= @token %>";
+
+braintree.setup(clientToken, "dropin", {
+  container: "payment-form"
+});
+</script>
