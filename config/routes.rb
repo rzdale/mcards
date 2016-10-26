@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
     root 'cards#index'
     
-    post '/checkout' => 'cards#checkout'
+    get '/checkout' => 'cards#checkout'
+    
+    post '/process_payment' => 'cards#process_payment'
 
     get '/cards' => 'cards#index'
     

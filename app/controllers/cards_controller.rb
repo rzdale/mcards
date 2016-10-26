@@ -15,7 +15,7 @@ class CardsController < ApplicationController
 
     def show
         @card = Card.find(params[:id])
-        
+
         @mana_img = case @card.color
            when "White" then "mana/White_Mana.png"
            when "Black" then "mana/Black_Mana.png"
@@ -24,22 +24,39 @@ class CardsController < ApplicationController
            when "Red" then "mana/Red_Mana.png"
         end
         
-        @price = case @card.rarity
-            when 1 then 1.0
-            when 2 then 5.0
-            when 3 then 10.0
-        end
-        
-        @token = Braintree::ClientToken.generate
+        @price = @card.price
         
     end
-
+    
+    
     def checkout
+        @card = Card.find(params[:id])
+        @price = @card.price        
+        @token = Braintree::ClientToken.generate
+    end
+    
+
+    def process_payment
         result = Braintree::Transaction.sale(
                 amount: params[:price],
                 payment_method_nonce: params[:payment_method_nonce],
                 options: {submit_for_settlement: true}
             )
+            
+        new_order = Order.new(
+            card_id: params[:card_id],
+            address_line_2: params[:address_line_2],
+            address_line_1: params[:address_line_1],
+            city: params[:city],
+            state_abbr: params[:state_abbr],
+            zip_code: params[:zip_code]
+            )
+        
+        if new_order.save
+            redirect_to root_path
+        else
+            @error = new_order.errors.full_messages
+        end
     end
 
 end
