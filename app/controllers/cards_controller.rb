@@ -35,6 +35,7 @@ class CardsController < ApplicationController
         @token = Braintree::ClientToken.generate
     end
     
+    
 
     def process_payment
         result = Braintree::Transaction.sale(
@@ -53,10 +54,20 @@ class CardsController < ApplicationController
             )
         
         if new_order.save
-            redirect_to root_path
+            redirect_to :confirm, flash: {
+                card_id: new_order.card_id,
+                paid: params[:price],
+                address_line_2: new_order.address_line_2,
+                address_line_1: new_order.address_line_1,
+                city: new_order.city,
+                state_abbr: new_order.state_abbr,
+                zip_code: new_order.zip_code
+            }
         else
             @error = new_order.errors.full_messages
         end
     end
 
+    def confirm
+    end
 end
