@@ -1,0 +1,28 @@
+Thank you for your purchase!
+
+<% p "flash is: " %>
+<% p flash %>
+
+<% if flash[:card_id] %>
+    <% card = Card.find(flash[:card_id]) %>
+    
+    <p>
+        <%= card.name %><br>
+        <%= card.artist %><br>
+        $<%= number_with_precision(flash[:paid], :precision => 2) %>
+    </p>
+    
+    This item will be shipped to the following address:
+    
+    <p>
+        <%= flash[:address_line_1] %><br>
+        <%= flash[:address_line_2] %><br>
+        <%= flash[:city] %><br>
+        <%= flash[:state_abbr] %><br>
+        <%= flash[:zip_code] %>
+    </p>
+<% else %>
+    Error: card order not found
+<% end %>
+
+<p><%= link_to "Return to home page", root_path%></p>

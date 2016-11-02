@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
     get '/cards' => 'cards#index'
     
+    get '/confirm' => 'cards#confirm'
+    
     get '/cards/:id' => 'cards#show'
     
 
